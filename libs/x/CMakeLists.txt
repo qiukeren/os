@@ -4,8 +4,13 @@ project(x)
 
 file(GLOB SOURCES "x_*.c")
 
+include_directories(../log)
+include_directories(../sqlite)
+
 add_library(x SHARED ${SOURCES})
 
 add_library(x_static STATIC ${SOURCES})
 
-target_include_directories(log PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_link_libraries(x PUBLIC sqlite)
+
