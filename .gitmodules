@@ -1,3 +1,6 @@
-[submodule "zlib"]
-	path = zlib
+[submodule "libs/yaml"]
+	path = libs/yaml
+	url = https://github.com/yaml/libyaml
+[submodule "libs/zlib"]
+	path = libs/zlib
 	url = https://github.com/madler/zlib

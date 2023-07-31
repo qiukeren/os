@@ -1,3 +1,6 @@
+#ifndef _X_PATHS_H
+#define _X_PATHS_H
+
 #define VT_MASTER "/dev/tty0"          /* Virtual console master */
 #define CONSOLE "/dev/console"         /* Logical system console */
 #define SECURETTY "/etc/securetty"     /* List of root terminals */
@@ -17,3 +20,14 @@
 #define RUNLEVEL_LOG                                        \
     "/var/run/runlevel" /* neutral place to store run level \
                          */
+
+#include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <limits.h>
+
+
+
+void x_mkdir(char* file_path, mode_t mode);
+
+#endif
