@@ -21,13 +21,17 @@
     "/var/run/runlevel" /* neutral place to store run level \
                          */
 
+
+#define X_PM_PACKAGELIST_DIR DEBUG_ROOT . "/etc/xpm.packages.d/"
+#define X_PM_PACKAGEMANAGER DEBUG_ROOT . "/etc/xpm.ini"
+
+
+#include <limits.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <limits.h>
-
-
 
 void x_mkdir(char* file_path, mode_t mode);
+void x_touch(const char* filename);
 
 #endif
