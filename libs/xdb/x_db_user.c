@@ -2,7 +2,7 @@
 
 int main(void) {
     
-    printf("%s\n", sqlite3_libversion()); 
+    printf("%s\n", sqlite3_libversion());
     
     return 0;
 }

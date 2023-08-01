@@ -4,3 +4,6 @@
 [submodule "libs/zlib"]
 	path = libs/zlib
 	url = https://github.com/madler/zlib
+[submodule "libs/googletest"]
+	path = libs/googletest
+	url = https://github.com/google/googletest

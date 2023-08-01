@@ -22,10 +22,10 @@
                          */
 
 
-#define X_PM_PACKAGELIST_DIR DEBUG_ROOT . "/etc/xpm.packages.d/"
-#define X_PM_PACKAGEMANAGER DEBUG_ROOT . "/etc/xpm.ini"
+#define X_PM_PACKAGELIST_DIR DEBUG_ROOT  "/etc/xpm.packages.d/"
+#define X_PM_PACKAGEMANAGER DEBUG_ROOT  "/etc/xpm.ini"
 
-
+#include <stdio.h>
 #include <limits.h>
 #include <string.h>
 #include <sys/stat.h>

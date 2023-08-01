@@ -2,10 +2,6 @@ cmake_minimum_required(VERSION 3.20)
 
 project(init)
 
-include_directories(../libs/human)
-include_directories(../libs/log)
-include_directories(../libs/paths)
-include_directories(../libs/x)
 
 SET(CMAKE_CXX_FLAGS "-O2")
 SET(CMAKE_C_FLAGS "-O2")

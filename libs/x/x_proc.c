@@ -1,9 +1,11 @@
 #include <stdarg.h>
 #include <stdio.h>
-#include <sys/prctl.h>
+
 
 void x_set_proc_title(char* fmt) {
+#ifndef __APPLE__
     prctl(PR_SET_NAME, fmt);
+#endif
 }
 
 void x_set_proc_title_va(char* fmt, ...) {
@@ -13,6 +15,7 @@ void x_set_proc_title_va(char* fmt, ...) {
     va_start(ap, fmt);
     vsnprintf(buf, sizeof(buf), fmt, ap);
     va_end(ap);
-
+#ifndef __APPLE__
     prctl(PR_SET_NAME, fmt);
+#endif
 }

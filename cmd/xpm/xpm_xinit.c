@@ -1,5 +1,5 @@
 #include "xpm.h"
 
 void xpm_init(){
-    x_mkdir("xpm_db",0755);
+    x_mkdir(X_PM_PACKAGELIST_DIR,0755);
 }
