@@ -1,10 +1,22 @@
 #include <gtest/gtest.h>
+#include <limits.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "x_command.h"
 
-TEST(testCase, command_check_ls) { 
-    EXPECT_EQ(x_command_check("ls"), true);
+TEST(testCase, command_check_ls) {
+    char* cmd = "ls > /dev/null 2>&1";
+    EXPECT_EQ(x_command_check(cmd), true);
 }
 
-TEST(testCase, command_check_ls_not_exist) { 
-    EXPECT_EQ(x_command_check("ls_not_exist_command"), false);
+TEST(testCase, command_check_ls_not_exist) {
+    char* cmd = "ls_not_exist_command > /dev/null 2>&1";
+    EXPECT_EQ(x_command_check(cmd), false);
+}
+
+TEST(testCase, command_open_not_exist_null) {
+    FILE* a = fopen("file_not_exist", "r");
+    EXPECT_EQ(a == NULL, true);
 }
