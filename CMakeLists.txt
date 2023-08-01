@@ -27,6 +27,7 @@ include(GoogleTest)
 #gtest_discover_tests(libs/x)
 
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 project(xos)
 
