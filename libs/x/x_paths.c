@@ -1,7 +1,6 @@
 #include "x_paths.h"
 
-
-void x_touch(const char *filename) {
+void x_touch(const char* filename) {
     int fd = fopen(filename, "a+");
 
     if (fd == -1) {

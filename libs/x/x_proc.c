@@ -1,6 +1,4 @@
-#include <stdarg.h>
-#include <stdio.h>
-
+#include "x_proc.h"
 
 void x_set_proc_title(char* fmt) {
 #ifndef __APPLE__
