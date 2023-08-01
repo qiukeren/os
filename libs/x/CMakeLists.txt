@@ -10,9 +10,11 @@ add_library(x SHARED ${SOURCES})
 
 add_library(x_static STATIC ${SOURCES})
 
-add_executable(test_x_kernel_log test_x_kernel_log.cpp)
-target_link_libraries(test_x_kernel_log gtest gtest_main)
-gtest_discover_tests(test_x_kernel_log)
+add_executable(test_libx ${SOURCESCPP})
+target_link_libraries(test_libx gtest gtest_main x)
+gtest_discover_tests(test_libx)
+
+
 
 target_link_libraries(x PUBLIC sqlite)
 
