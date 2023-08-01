@@ -21,12 +21,8 @@
     "/var/run/runlevel" /* neutral place to store run level \
                          */
 
-
-#define X_PM_PACKAGELIST_DIR DEBUG_ROOT  "/etc/xpm.packages.d/"
-#define X_PM_PACKAGEMANAGER DEBUG_ROOT  "/etc/xpm.ini"
-
-#include <stdio.h>
 #include <limits.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>

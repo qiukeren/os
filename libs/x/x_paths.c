@@ -1,15 +1,14 @@
 #include "x_paths.h"
 
+void x_touch(const char* filename) {
+    FILE *fd = fopen(filename, "a+");
 
-void x_touch(const char *filename) {
-    int fd = fopen(filename, "a+");
-
-    if (fd == -1) {
+    if (fd == NULL) {
         perror("Unable to touch file");
         return;
     }
 
-    close(fd);
+    fclose(fd);
 }
 
 void x_mkdir(char* path, mode_t mode) {

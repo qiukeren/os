@@ -27,6 +27,7 @@ include(GoogleTest)
 #gtest_discover_tests(libs/x)
 
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 project(xos)
 
@@ -35,6 +36,7 @@ include_directories(xos PRIVATE
         libs/log
         libs/sqlite
         libs/x
+        libs/xconf
         libs/xdb
         libs/httplib
         libs/zlib
@@ -60,6 +62,7 @@ add_subdirectory(libs/sqlite)
 add_subdirectory(libs/zlib)
 add_subdirectory(libs/ini)
 add_subdirectory(libs/x)
+add_subdirectory(libs/xconf)
 add_subdirectory(libs/xdb)
 add_subdirectory(editor)
 
@@ -68,7 +71,7 @@ add_subdirectory(cmd/xhttpd)
 add_subdirectory(shell)
 add_subdirectory(unnpk)
 
-if (__LINUX__)
+if (LINUX)
     add_subdirectory(init)
     add_subdirectory(getty)
 endif ()
