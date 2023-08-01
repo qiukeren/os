@@ -1,5 +1,5 @@
+#pragma once
 #ifndef _X_SYS_H
-
 #define _X_SYS_H
 
 #include <stdio.h>

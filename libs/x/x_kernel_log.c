@@ -1,12 +1,4 @@
-//
-// Created by qkr on 23-7-29.
-//
-
 #include "x_kernel_log.h"
-#include <errno.h>
-#include <fcntl.h>
-#include <stdio.h>
- #include <string.h>
 
 void x_kernel_log(const unsigned int tag, const char* msg) {
     int fd_kmsg = open("/dev/kmsg", O_WRONLY);

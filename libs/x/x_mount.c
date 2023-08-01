@@ -1,4 +1,4 @@
-#include <sys/mount.h>
+#include <x_mount.h>
 
 void x_init_mount() {
 #ifndef __APPLE__

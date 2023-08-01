@@ -5,6 +5,6 @@ int add(int a, int b) {
 }
 
 
-TEST(testCase, startCase) { 
+TEST(x, startCase) { 
     EXPECT_EQ(add(8, 12), 20);
 }

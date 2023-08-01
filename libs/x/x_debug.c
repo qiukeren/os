@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "x_debug.h"
 
 void x_debug_print_file_content(char* filename) {
     int c;

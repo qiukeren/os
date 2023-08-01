@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _X_PROC_H
 #define _X_PROC_H
 

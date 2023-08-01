@@ -1,14 +1,14 @@
 #include <gtest/gtest.h>
-#include "x_command.h"
 
+#include "x.h"
+using namespace std;
 
-TEST(testCase, command_check_ls_not_exist) {
-    char* cmd = "ls_not_exist_command > /dev/null 2>&1";
-    EXPECT_EQ(x_command_check(cmd), false);
-}
-
-TEST(testCase, test_hash_md5_xxxa111) {
-    x_mkdir("test/")
-    x_command_check("echo 'xxxa111' > test/test_hash_md5_xxxa111")
-    EXPECT_EQ(a == NULL, true);
+TEST(x, test_hash_md5_xxxa111) {
+    string expRes = "f2329fa52888c1608408d259436f9ef2";
+    x_mkdir("test", 0755);
+    x_command_check("echo 'xxxa111' > test/test_hash_md5_xxxa111");
+    FILE* a = fopen("test/test_hash_md5_xxxa111", "r");
+    char m[33];
+    x_md5_sum(a, m);
+    EXPECT_STREQ(m, expRes.c_str());
 }

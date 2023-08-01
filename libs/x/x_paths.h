@@ -1,5 +1,7 @@
+#pragma once
 #ifndef _X_PATHS_H
 #define _X_PATHS_H
+
 
 #define VT_MASTER "/dev/tty0"          /* Virtual console master */
 #define CONSOLE "/dev/console"         /* Logical system console */
@@ -29,5 +31,6 @@
 
 void x_mkdir(char* file_path, mode_t mode);
 void x_touch(const char* filename);
+
 
 #endif
