@@ -1,9 +1,4 @@
 #include <gtest/gtest.h>
-#include <limits.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <unistd.h>
 #include "x_command.h"
 
 TEST(testCase, command_check_ls) {
