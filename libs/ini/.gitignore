@@ -1,7 +1,8 @@
 *
 
+!/test_files
+!/test_files/*
 !.gitignore
 !*.c
 !*.h
 !CMakeLists.txt
-!/test_files
