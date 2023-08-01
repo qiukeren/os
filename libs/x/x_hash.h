@@ -149,6 +149,6 @@ MD5state* nil;
 void encode(byte*, uint*, uint);
 void decode(uint*, byte*, uint);
 MD5state* md5(byte*, uint, byte*, MD5state*);
-void sum(FILE*, char*);
+void x_md5_sum(FILE* fd, char* name)
 
 #endif

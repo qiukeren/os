@@ -1,11 +1,10 @@
 #include "x_hash.h"
 
 int debug;
-int hex; /* print in hex?  (instead of default base64) */
+int hex = true; /* print in hex?  (instead of default base64) */
 
 
-
-void sum(FILE* fd, char* name) {
+void x_md5_sum(FILE* fd, char* name) {
     byte* buf;
     byte digest[16];
     char pr64[25];
