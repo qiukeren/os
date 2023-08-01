@@ -218,12 +218,12 @@ void md5File(FILE* file, uint8_t* result) {
     memcpy(result, ctx.digest, 16);
 }
 
-void x_md5_sum(FILE* file,char * res) {
+void x_md5_sum(FILE* file, char* res) {
     // char res[33];
     uint8_t digest[16];
     md5File(file, digest);
     for (int i = 0; i < 16; i++) {
-        printf("-%02x", digest[i]);
+        // printf("-%02x", digest[i]);
         sprintf(&res[i * 2], "%02x", digest[i]);
     }
     res[32] = '\0';

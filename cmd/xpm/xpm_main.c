@@ -1,5 +1,5 @@
-#include"xpm.h"
+#include "xpm.h"
 
-int main(){
+int main() {
     xpm_init();
 }

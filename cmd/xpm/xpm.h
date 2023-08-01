@@ -2,7 +2,7 @@
 #define _XPM_H
 
 #include <stdio.h>
-#include "x_paths.h"
+#include "x.h"
 
 struct x_pm_package_node {
     char* version;
