@@ -9,10 +9,6 @@ add_library(ini SHARED ${SOURCES})
 
 add_library(ini_static STATIC ${SOURCES})
 
-# add_executable(test_ini test_ini.c)
-
-# target_link_libraries(test_ini PUBLIC ini)
-
 file(GLOB SOURCESCPP "test_*.cpp")
 
 add_executable(test_ini ${SOURCESCPP})
