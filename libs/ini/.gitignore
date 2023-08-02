@@ -4,5 +4,6 @@
 !/test_files/*
 !.gitignore
 !*.c
+!*.cpp
 !*.h
 !CMakeLists.txt

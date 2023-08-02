@@ -4,7 +4,6 @@ project(x)
 
 file(GLOB SOURCES "ini.c")
 
-
 add_library(ini SHARED ${SOURCES})
 
 add_library(ini_static STATIC ${SOURCES})
