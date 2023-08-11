@@ -5,6 +5,8 @@ Testing
 test
 build
 
+crosstools
+
 .idea
 
 .cmake

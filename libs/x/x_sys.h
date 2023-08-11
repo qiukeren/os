@@ -11,5 +11,5 @@ struct x_sys_version {
 };
 
 void x_sys_print_build_version();
-struct x_sys_version x_sys_sqlite_version();
+// struct x_sys_version x_sys_sqlite_version();
 #endif

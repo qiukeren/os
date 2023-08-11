@@ -14,6 +14,9 @@ extern "C" {
 #include "x_paths.h"
 #include "x_proc.h"
 #include "x_sys.h"
+#include "x_reboot.h"
+
+#define X_VERSION "0.1"
 
 #if __cplusplus
 }

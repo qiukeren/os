@@ -1,7 +1,3 @@
-#ifndef VERSION
-#define VERSION "3.01"
-#endif
-
 #include <ctype.h>
 #include <dirent.h>
 #include <errno.h>
@@ -28,9 +24,32 @@
 #include <unistd.h>
 #include <utmp.h>
 #include "log.h"
-#include "x_mount.h"
-#include "x_paths.h"
-#include "x_proc.h"
+#include "x.h"
+
+#define __USE_POSIX
+extern char ** environ;
+
+
+
+#define VT_MASTER "/dev/tty0"          /* Virtual console master */
+#define CONSOLE "/dev/console"         /* Logical system console */
+#define SECURETTY "/etc/securetty"     /* List of root terminals */
+#define SDALLOW "/etc/shutdown.allow"  /* Users allowed to shutdown */
+#define INITTAB "/etc/inittab"         /* Location of inittab */
+#define INIT "/sbin/init"              /* Location of init itself. */
+#define NOLOGIN "/etc/nologin"         /* Stop user logging in. */
+#define FASTBOOT "/fastboot"           /* Enable fast boot. */
+#define FORCEFSCK "/forcefsck"         /* Force fsck on boot */
+#define SDPID "/var/run/shutdown.pid"  /* PID of shutdown program */
+#define SHELL "/bin/sh"                /* Default shell */
+#define SULOGIN "/sbin/sulogin"        /* Sulogin */
+#define INITSCRIPT "/etc/initscript"   /* Initscript. */
+#define PWRSTAT_OLD "/etc/powerstatus" /* COMPAT: SIGPWR reason (OK/BAD) */
+#define PWRSTAT "/var/run/powerstatus" /* COMPAT: SIGPWR reason (OK/BAD) */
+#define RUNLEVEL_LOG                                        \
+    "/var/run/runlevel" /* neutral place to store run level \
+                         */
+
 
 #ifdef RB_ENABLE_CAD
 #define BMAGIC_HARD RB_ENABLE_CAD
@@ -58,11 +77,8 @@
 
 #define init_reboot(magic) reboot(magic)
 
-#ifndef _INITREQ_H
-#define _INITREQ_H
-
 #ifndef INIT_FIFO
-#define INIT_FIFO "/run/initctl"
+#define INIT_FIFO "/initctl"
 #endif
 
 #define INIT_MAGIC 0x03091969
@@ -104,7 +120,6 @@ struct init_request_bsd {
  *	struct to be 384 bytes.
  */
 struct init_request {
-    int magic;     /* Magic number                 */
     int cmd;       /* What kind of request         */
     int runlevel;  /* Runlevel to change to        */
     int sleeptime; /* Time between TERM and KILL   */
@@ -114,22 +129,11 @@ struct init_request {
     } i;
 };
 
-#endif
-
-#ifndef RUNLEVEL_LOG_HEADER__
-#define RUNLEVEL_LOG_HEADER__
-
-#ifndef TRUE
-#define TRUE 1
-#endif
-#ifndef FALSE
-#define FALSE 0
-#endif
 
 int Write_Runlevel_Log(int new_runlevel);
 int Read_Runlevel_Log(int* runlevel);
 
-#endif
+
 
 #define ISMEMBER(set, val) ((set) & (1 << (val)))
 #define DELSET(set, val) ((set) &= ~(1 << (val)))
@@ -225,6 +229,7 @@ typedef struct _child_ {
     struct _child_* next; /* For the linked list */
 } CHILD;
 
+
 /* Values for the 'flags' field */
 #define RUNNING 2   /* Process is still running */
 #define KILLME 4    /* Kill this process */
@@ -288,9 +293,9 @@ extern char prevlevel;
     } while (0)
 
 /* Version information */
-char* Version = "@(#) init " VERSION " miquels@cistron.nl";
-char* bootmsg = "version " VERSION " %s";
-#define E_VERSION "INIT_VERSION=sysvinit-" VERSION
+char* Version = "@(#) init " X_VERSION " miquels@cistron.nl";
+char* bootmsg = "version " X_VERSION " %s";
+#define E_VERSION "INIT_VERSION=xinit-" X_VERSION
 
 CHILD* family = NULL;    /* The linked list of all entries */
 CHILD* newFamily = NULL; /* The list after inittab re-read */
@@ -636,8 +641,7 @@ static void* imalloc(size_t size) {
     void* m;
 
     while ((m = malloc(size)) == NULL) {
-        initlog(L_VB, "out of memory");
-        do_msleep(SHORT_SLEEP);
+        do_msleep(5000);
     }
     memset(m, 0, size);
     return m;
@@ -1739,7 +1743,7 @@ static void startup(CHILD* ch) {
     }
 }
 
-#ifdef __linux__
+
 static void check_kernel_console() {
     FILE* fp;
     char buf[4096];
@@ -1811,7 +1815,7 @@ static void check_kernel_console() {
     fclose(fp);
     return;
 }
-#endif
+
 
 /*
  *	Read the inittab file.
@@ -1835,7 +1839,7 @@ static void read_inittab(void) {
     int talk;         /* Talk to the user */
     int done = -1; /* Ready yet? , 2 level : -1 nothing done, 0 inittab done, 1
                          inittab and inittab.d done */
-    DIR* tabdir = NULL;        /* the INITTAB.D dir */
+
     struct dirent* file_entry; /* inittab.d entry */
     char f_name[272];          /* size d_name + strlen /etc/inittad.d/ */
 
@@ -1854,12 +1858,6 @@ static void read_inittab(void) {
         initlog(L_VB, "No inittab file found");
     }
 
-    /*
-     *  Open INITTAB.D directory
-     */
-    if ((tabdir = opendir(INITTABD)) == NULL) {
-        initlog(L_VB, "No inittab.d directory found");
-    }
 
     while (done != 1) {
         /*
@@ -1885,55 +1883,55 @@ static void read_inittab(void) {
         } /* end if( done==-1) */
         else if (done == 0) {
             /* parse /etc/inittab.d and read all .tab files */
-            if (tabdir != NULL) {
-                if ((file_entry = readdir(tabdir)) != NULL) {
-                    /* ignore files not like *.tab */
-                    if (!strcmp(file_entry->d_name, ".") ||
-                        !strcmp(file_entry->d_name, "..")) {
-                        continue;
-                    }
-                    if (strlen(file_entry->d_name) < 5 ||
-                        strcmp(
-                            file_entry->d_name + strlen(file_entry->d_name) - 4,
-                            ".tab")) {
-                        continue;
-                    }
-                    /*
-                     * initialize filename
-                     */
-                    memset(f_name, 0, sizeof(char) * 272);
-                    snprintf(f_name, 272, "/etc/inittab.d/%s",
-                             file_entry->d_name);
-                    initlog(L_VB, "Reading: %s", f_name);
-                    /*
-                     * read file in inittab.d only one entry per file
-                     */
-                    if ((fp_tab = fopen(f_name, "r")) == NULL) {
-                        continue;
-                    }
-                    /* read the file while the line contain comment */
-                    while (fgets(buf, sizeof(buf), fp_tab) != NULL) {
-                        for (p = buf; *p == ' ' || *p == '\t'; p++)
-                            ;
-                        if (*p != '#' && *p != '\n') {
-                            break;
-                        }
-                    }
-                    fclose(fp_tab);
-                    /* do some checks */
-                    if (strlen(p) == 0) {
-                        continue;
-                    }
-                } /* end of readdir, all is done */
-                else {
-                    done = 1;
-                    continue;
-                }
-            } /* end of if(tabdir!=NULL) */
-            else {
+            // if (tabdir != NULL) {
+            //     if ((file_entry = readdir(tabdir)) != NULL) {
+            //         /* ignore files not like *.tab */
+            //         if (!strcmp(file_entry->d_name, ".") ||
+            //             !strcmp(file_entry->d_name, "..")) {
+            //             continue;
+            //         }
+            //         if (strlen(file_entry->d_name) < 5 ||
+            //             strcmp(
+            //                 file_entry->d_name + strlen(file_entry->d_name) - 4,
+            //                 ".tab")) {
+            //             continue;
+            //         }
+            //         /*
+            //          * initialize filename
+            //          */
+            //         memset(f_name, 0, sizeof(char) * 272);
+            //         snprintf(f_name, 272, "/etc/inittab.d/%s",
+            //                  file_entry->d_name);
+            //         initlog(L_VB, "Reading: %s", f_name);
+            //         /*
+            //          * read file in inittab.d only one entry per file
+            //          */
+            //         if ((fp_tab = fopen(f_name, "r")) == NULL) {
+            //             continue;
+            //         }
+            //         /* read the file while the line contain comment */
+            //         while (fgets(buf, sizeof(buf), fp_tab) != NULL) {
+            //             for (p = buf; *p == ' ' || *p == '\t'; p++)
+            //                 ;
+            //             if (*p != '#' && *p != '\n') {
+            //                 break;
+            //             }
+            //         }
+            //         fclose(fp_tab);
+            //         /* do some checks */
+            //         if (strlen(p) == 0) {
+            //             continue;
+            //         }
+            //     } /* end of readdir, all is done */
+            //     else {
+            //         done = 1;
+            //         continue;
+            //     }
+            // } /* end of if(tabdir!=NULL) */
+            // else {
                 done = 1;
                 continue;
-            }
+            // }
         } /* end of if ( done == 0 ) */
         lineNo++;
         /*
@@ -2126,13 +2124,13 @@ static void read_inittab(void) {
     if (fp) {
         fclose(fp);
     }
-    if (tabdir) {
-        closedir(tabdir);
-    }
+    // if (tabdir) {
+    //     closedir(tabdir);
+    // }
 
-#ifdef __linux__
+
     check_kernel_console();
-#endif
+
 
     /*
      *	Loop through the list of children, and see if they need to
@@ -2944,7 +2942,7 @@ static void check_init_fifo(void) {
             /*
              *	Process request.
              */
-            if (request.magic != INIT_MAGIC || n != sizeof(request)) {
+            if (n != sizeof(request)) {
                 initlog(L_VB, "got bogus initrequest");
                 continue;
             }
@@ -3252,7 +3250,7 @@ static void init_main(void) {
         }
 #endif
 
-#ifdef __linux__
+
         /*
          *	Tell the kernel to send us SIGINT when CTRL-ALT-DEL
          *	is pressed, and that we want to handle keyboard signals.
@@ -3264,7 +3262,7 @@ static void init_main(void) {
         } else {
             (void)ioctl(0, KDSIGACCEPT, SIGWINCH);
         }
-#endif
+
 
         /*
          *	Ignore all signals.
@@ -3422,7 +3420,6 @@ static int telinit(char* progname, int argc, char** argv) {
     char* env = NULL;
 
     memset(&request, 0, sizeof(request));
-    request.magic = INIT_MAGIC;
 
     while ((f = getopt(argc, argv, "t:e:")) != EOF) {
         switch (f) {
@@ -3518,7 +3515,6 @@ static int telinit(char* progname, int argc, char** argv) {
 int main(int argc, char** argv) {
     x_init_mount();
 
-    LOG_INIT("/log.log");
     LOG_INFO("start up");
 
     char* p;
@@ -3533,7 +3529,7 @@ int main(int argc, char** argv) {
     }
 
     if ((argc == 2) && (!strcmp(argv[1], "--version"))) {
-        printf("SysV init version: %s\n\n", VERSION);
+        printf("SysV init version: %s\n\n", X_VERSION);
         exit(0);
     }
 

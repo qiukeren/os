@@ -1,0 +1,123 @@
+#!/bin/echo Use as an argument to mkroot.sh
+
+download e4114b43cb76cea9266525ca9374effb792a7713 \
+  https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v6.x/linux-6.4.7.tar.gz
+
+[ -z "$TARGET" ] && TARGET="$(uname -m)"
+
+# Add generic info to arch-specific part of miniconfig
+getminiconfig()
+{
+  echo "# make ARCH=$KARCH allnoconfig KCONFIG_ALLCONFIG=$TARGET.miniconf"
+  echo "# make ARCH=$KARCH -j \$(nproc)"
+  echo "# boot $VMLINUX"
+  echo
+  echo "$KERNEL_CONFIG"
+  echo "
+# CONFIG_EMBEDDED is not set
+CONFIG_EARLY_PRINTK=y
+CONFIG_BINFMT_ELF=y
+CONFIG_BINFMT_SCRIPT=y
+CONFIG_NO_HZ=y
+CONFIG_HIGH_RES_TIMERS=y
+
+CONFIG_BLK_DEV=y
+CONFIG_BLK_DEV_INITRD=y
+CONFIG_RD_GZIP=y
+
+CONFIG_BLK_DEV_LOOP=y
+CONFIG_EXT4_FS=y
+CONFIG_EXT4_USE_FOR_EXT2=y
+CONFIG_VFAT_FS=y
+CONFIG_FAT_DEFAULT_UTF8=y
+CONFIG_MISC_FILESYSTEMS=y
+CONFIG_SQUASHFS=y
+CONFIG_SQUASHFS_XATTR=y
+CONFIG_SQUASHFS_ZLIB=y
+CONFIG_DEVTMPFS=y
+CONFIG_DEVTMPFS_MOUNT=y
+CONFIG_TMPFS=y
+CONFIG_TMPFS_POSIX_ACL=y
+
+CONFIG_NET=y
+CONFIG_PACKET=y
+CONFIG_UNIX=y
+CONFIG_INET=y
+CONFIG_IPV6=y
+CONFIG_NETDEVICES=y
+#CONFIG_NET_CORE=y
+#CONFIG_NETCONSOLE=y
+CONFIG_ETHERNET=y
+"
+}
+
+# Each target needs board, serial console, RTC, ethernet, block device.
+
+# Target-specific info in an if/else staircase
+
+if [ "$TARGET" == i486 ] || [ "$TARGET" == i686 ] ||
+     [ "$TARGET" == x86_64 ] || [ "$TARGET" == x32 ]
+then
+  if [ "$TARGET" == i486 ]
+  then
+    QEMU="qemu-system-i386 -cpu 486 -global fw_cfg.dma_enabled=false"
+    KERNEL_CONFIG="CONFIG_M486=y"
+  elif [ "$TARGET" == i686 ]
+  then
+    QEMU="qemu-system-i386 -cpu pentium3"
+    KERNEL_CONFIG="CONFIG_MPENTIUMII=y"
+  else
+    QEMU=qemu-system-x86_64
+    KERNEL_CONFIG="CONFIG_64BIT=y"
+    [ "$TARGET" == x32 ] && KERNEL_CONFIG="
+$KERNEL_CONFIG
+CONFIG_IA32_EMULATION=y
+CONFIG_X86_X32=y
+"
+  fi
+  KARCH=x86
+  KARGS="console=ttyS0"
+  VMLINUX=arch/x86/boot/bzImage
+  CONFIG_MPENTIUMII=y
+  KERNEL_CONFIG="
+$KERNEL_CONFIG
+
+CONFIG_UNWINDER_FRAME_POINTER=y
+
+CONFIG_PCI=y
+CONFIG_BLK_DEV_SD=y
+CONFIG_ATA=y
+CONFIG_ATA_SFF=y
+CONFIG_ATA_BMDMA=y
+CONFIG_ATA_PIIX=y
+
+CONFIG_NET_VENDOR_INTEL=y
+CONFIG_E1000=y
+CONFIG_SERIAL_8250=y
+CONFIG_SERIAL_8250_CONSOLE=y
+CONFIG_RTC_CLASS=y
+"
+else
+  echo "Unknown \$TARGET"
+  exit 1
+fi
+
+# Build kernel
+
+setupfor linux
+
+
+#getminiconfig > "$OUTPUT/$TARGET.miniconf" &&
+# cp /root/kernel.config "$OUTPUT/$TARGET.miniconf" &&
+# make ARCH=$KARCH allnoconfig KCONFIG_ALLCONFIG="$OUTPUT/$TARGET.miniconf" &&
+# make ARCH=$KARCH CROSS_COMPILE="$CROSS_COMPILE" -j $(nproc) || exit 1
+
+cp ../../../../kernel.config .config &&
+make ARCH=$KARCH CROSS_COMPILE="$CROSS_COMPILE" -j $(nproc) || exit 1
+
+if [ ! -z "$DTB" ]
+then
+  cp "$DTB" "$OUTPUT/$(basename "$DTB")" || exit 1
+fi
+
+cp "$VMLINUX" "$OUTPUT/$(basename "$VMLINUX")"

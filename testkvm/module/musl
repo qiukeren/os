@@ -1,0 +1,11 @@
+#!/bin/echo Use as an argument to mkroot.sh
+
+download 80237ce30830817442372f6999e65393121d972b \
+  https://git.musl-libc.org/cgit/musl/snapshot/musl-1.2.4.tar.gz
+
+setupfor musl
+
+./configure --prefix=$ROOT/usr &&
+
+make &&
+LDFLAGS=--static make install -j $(nproc)

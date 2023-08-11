@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "time.h": "c",
+        "stdio.h": "c",
+        "utmp.h": "c",
+        "gtest.h": "c",
+        "xinit.h": "c"
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+    "cmakeFormat.args": [
+        "--tab-size=4"
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.formatting.provider": "none"
+}

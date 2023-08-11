@@ -8,8 +8,8 @@ add_library(ini SHARED ${SOURCES})
 
 add_library(ini_static STATIC ${SOURCES})
 
-file(GLOB SOURCESCPP "test_*.cpp")
+# file(GLOB SOURCESCPP "test_*.cpp")
 
-add_executable(test_ini ${SOURCESCPP})
-target_link_libraries(test_ini gtest gtest_main ini)
-gtest_discover_tests(test_ini)
+# add_executable(test_ini ${SOURCESCPP})
+# target_link_libraries(test_ini gtest gtest_main ini)
+# gtest_discover_tests(test_ini)

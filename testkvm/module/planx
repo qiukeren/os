@@ -1,0 +1,7 @@
+#!/bin/echo
+
+cd ..
+go run buildtools/buildtools.go
+cp -r target $OUTPUT/root/planx
+cp target/bin/init $OUTPUT/root/init
+
