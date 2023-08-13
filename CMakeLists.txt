@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
 set(CMAKE_SYSTEM_NAME Linux)
-# set(CMAKE_SYSTEM_PROCESSOR aarch64)
 
 include(crosstools.cmake)
 
@@ -15,11 +14,6 @@ message(
 link_directories(
         "${CMAKE_SOURCE_DIR}/crosstools/${CROSSTOOL_NAME}/${XOS_BUILD_TARGET}-linux-musl/lib"
 )
-
-message("${CMAKE_SOURCE_DIR}/crosstools/${CROSSTOOL_NAME}/${XOS_BUILD_TARGET}-linux-musl/lib")
-
-add_custom_target(c_build COMMAND ./configure WORKING_DIRECTORY musl COMMAND
-        make WORKING_DIRECTORY musl)
 
 #set_property(TARGET c PROPERTY IMPORTED_LOCATION "musl/lib/libc.so")
 #link_directories("musl/lib/")
@@ -94,7 +88,7 @@ add_subdirectory(cmd/examples)
 add_subdirectory(libs/googletest)
 add_subdirectory(libs/log)
 add_subdirectory(libs/linenoise)
-# add_subdirectory(libs/sqlite)
+add_subdirectory(libs/sqlite)
 add_subdirectory(libs/zlib)
 add_subdirectory(libs/ini)
 add_subdirectory(libs/x)
