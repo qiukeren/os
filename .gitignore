@@ -4,8 +4,11 @@ lib
 Testing
 test
 build
+dist
 
 crosstools
+
+*.cbp
 
 .idea
 

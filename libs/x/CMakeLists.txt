@@ -10,8 +10,10 @@ add_library(x SHARED ${SOURCES})
 
 add_library(x_static STATIC ${SOURCES})
 
-# target_link_libraries(x PUBLIC sqlite)
+#target_link_libraries(x PUBLIC sqlite)
 
-# add_executable(test_libx ${SOURCESCPP})
-# target_link_libraries(test_libx gtest gtest_main x)
-# gtest_discover_tests(test_libx)
+if ("${XOS_BUILD_TARGET}" STREQUAL "")
+    add_executable(test_libx ${SOURCESCPP})
+    target_link_libraries(test_libx gtest gtest_main x)
+    gtest_discover_tests(test_libx)
+endif ()
