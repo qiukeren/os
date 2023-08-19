@@ -1,0 +1,6 @@
+project: xpm_pack
+
+files:
+  -
+    file: xpm_pack.go
+    target: xpm_pack.go.dest

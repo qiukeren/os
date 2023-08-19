@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#define X_VERSION "XOS-prebuild-0.0.0"
+
 #include "x_command.h"
 #include "x_debug.h"
 #include "x_file.h"
@@ -15,8 +17,14 @@ extern "C" {
 #include "x_proc.h"
 #include "x_sys.h"
 #include "x_reboot.h"
+#include "x_flag.h"
+#include "x_cflag.h"
+// #include "x_pb.h"
+// #include "x_pb_common.h"
+// #include "x_pb_encode.h"
+// #include "x_pb_decode.h"
 
-#define X_VERSION "0.1"
+
 
 #if __cplusplus
 }

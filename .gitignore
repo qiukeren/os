@@ -1,3 +1,13 @@
+# global white list
+!.gitignore
+!*.c
+!*.cpp
+!*.h
+!CMakeLists.txt
+
+
+
+# xos runtime test files
 log.log
 history.txt
 lib
@@ -5,22 +15,14 @@ Testing
 test
 build
 dist
-
 crosstools
-
 *.cbp
-
 .idea
-
 .cmake
-
 .ninja_log
-
-log.log
-editor/editor
-init/init
-
 target
+
+.DS_Store
 
 # Prerequisites
 *.d

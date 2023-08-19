@@ -4,7 +4,12 @@
         "stdio.h": "c",
         "utmp.h": "c",
         "gtest.h": "c",
-        "xinit.h": "c"
+        "xinit.h": "c",
+        "x_cflag.h": "c",
+        "string": "c",
+        "xpm.h": "c",
+        "system_error": "c",
+        "limits.h": "c"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
     "cmakeFormat.args": [
@@ -13,5 +18,5 @@
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
     },
-    "python.formatting.provider": "none"
+    "dotnetAcquisitionExtension.installTimeoutValue": 12000
 }

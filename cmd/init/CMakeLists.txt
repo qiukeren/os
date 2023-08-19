@@ -15,7 +15,7 @@ add_compile_definitions(_GNU_SOURCE)
 
 add_executable(init init.c init_func.c)
 
-target_link_libraries(init PUBLIC log x_static)
+target_link_libraries(init PUBLIC x_static)
 
 
 file(GLOB SOURCESCPP "test_*.cpp")

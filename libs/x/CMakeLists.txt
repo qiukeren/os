@@ -4,13 +4,16 @@ project(x)
 
 file(GLOB SOURCES "x_*.c")
 
-file(GLOB SOURCESCPP "test_*.cpp")
+file(GLOB SOURCESCPP "test_*.cpp" "*/test_*.cpp")
 
 add_library(x SHARED ${SOURCES})
 
 add_library(x_static STATIC ${SOURCES})
 
 #target_link_libraries(x PUBLIC sqlite)
+
+add_executable(test_cflag test_cflag.c)
+target_link_libraries(test_cflag x)
 
 if ("${XOS_BUILD_TARGET}" STREQUAL "")
     add_executable(test_libx ${SOURCESCPP})

@@ -4,5 +4,3 @@ project(example_hello_world)
 
 add_executable(hello_world main.c)
 
-
-

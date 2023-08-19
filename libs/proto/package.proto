@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option go_package = ".";
+
+
+message PackageMetaContent {
+    bytes name = 1;
+    bytes description = 2;
+
+    uint32 majorVersion = 3;
+    uint32 minorVersion = 4;
+    uint32 revision = 5;
+}
+
+message PackageFileMeta {
+    uint32 stat = 1;
+    uint32 uid = 2;
+    uint32 gid = 3;
+
+    uint64 AtimSec = 4;
+    uint64 AtimNsec = 5;
+    uint64 MtimSec = 6;
+    uint64 MtimNsec = 7;
+    uint64 CtimSec = 8;
+    uint64 CtimNsec = 9;
+
+    string md5 = 10;
+    string name = 11;
+}

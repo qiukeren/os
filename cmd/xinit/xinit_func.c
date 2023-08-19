@@ -38,7 +38,7 @@ void read_inittab2(void) {
     XINIT_ITEM *ch, *old, *i; /* Pointers to CHILD structure */
     XINIT_ITEM* head = NULL;  /* Head of linked list */
 
-    fp = fopen("inittab", "r");
+    fp = fopen(INITTAB, "r");
     if (fp == NULL) {
         printf("%s", "No inittab file found");
     }

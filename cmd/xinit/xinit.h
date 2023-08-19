@@ -1,5 +1,5 @@
 #ifndef _XINIT_H
-#define _XINIT_H
+#define _XINIT_H 1
 
 #ifdef __cplusplus
 extern "C" {

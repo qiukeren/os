@@ -3,7 +3,7 @@
 #define _X_SYS_H
 
 #include <stdio.h>
-#include "sqlite3.h"
+#include <stdlib.h>
 
 struct x_sys_version {
     char* name;
@@ -12,4 +12,7 @@ struct x_sys_version {
 
 void x_sys_print_build_version();
 // struct x_sys_version x_sys_sqlite_version();
+
+void x_sys_exit(int ret);
+
 #endif

@@ -15,3 +15,8 @@ add_compile_definitions(_GNU_SOURCE)
 add_executable(unnpk unnpk.c)
 
 target_link_libraries(unnpk PUBLIC zlib)
+
+file(GLOB SOURCESCPP "test_*.cpp")
+add_executable(test_unnpk ${SOURCESCPP})
+target_link_libraries(test_unnpk gtest gtest_main)
+gtest_discover_tests(test_unnpk)
