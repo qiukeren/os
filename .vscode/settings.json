@@ -9,7 +9,8 @@
         "string": "c",
         "xpm.h": "c",
         "system_error": "c",
-        "limits.h": "c"
+        "limits.h": "c",
+        "cstdint": "cpp"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
     "cmakeFormat.args": [

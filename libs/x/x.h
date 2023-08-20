@@ -19,6 +19,7 @@ extern "C" {
 #include "x_reboot.h"
 #include "x_flag.h"
 #include "x_cflag.h"
+#include "x_encode.h"
 // #include "x_pb.h"
 // #include "x_pb_common.h"
 // #include "x_pb_encode.h"

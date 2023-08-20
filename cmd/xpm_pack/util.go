@@ -1,6 +1,8 @@
 package main
 
-import "encoding/binary"
+import (
+	"encoding/binary"
+)
 
 func toBytes32(a uint32) []byte {
 	var buf = [4]byte{}
@@ -13,3 +15,8 @@ func toBytes64(a uint64) []byte {
 	binary.BigEndian.PutUint64(buf[0:8], a)
 	return buf[0:8]
 }
+
+// func main() {
+// 	log.Printf("%X\n",0x075BCD15)
+// 	log.Printf("%#v\n", toBytes32(0x075BCD15))
+// }

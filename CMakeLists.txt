@@ -41,6 +41,7 @@ set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_RELEASE} -O2 -Wall")
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     message("Debug build.")
+    add_definitions(-DLOG_LEVEL=TRACE_LEVEL)
     add_compile_definitions(DEBUG_ROOT="./test")
 elseif(CMAKE_BUILD_TYPE MATCHES Release)
     message("Release build.")
@@ -77,7 +78,7 @@ include_directories(
     libs/nanopb/
 )
 
-add_subdirectory(cmd/examples)
+
 
 add_subdirectory(libs/googletest)
 add_subdirectory(libs/log)
@@ -94,6 +95,8 @@ set(BUILD_STATIC_LIBS on)
 
 add_subdirectory(libs/nanopb)
 # add_subdirectory(libs/xconf) add_subdirectory(libs/xdb)
+
+add_subdirectory(cmd/examples)
 
 add_subdirectory(cmd/editor)
 add_subdirectory(cmd/validation)

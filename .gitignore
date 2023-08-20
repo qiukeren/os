@@ -21,6 +21,7 @@ crosstools
 .cmake
 .ninja_log
 target
+test_target_file
 
 .DS_Store
 
