@@ -1,6 +1,4 @@
 #include "x.h"
-#include "log.h"
-
 
 uint32_t x_read_uint32(uint8_t* pointer) {
     uint32_t i32 = 0;
@@ -47,5 +45,5 @@ void x_read_chars(uint8_t* pointer, int size, char* target) {
 
 void x_read_move_chars(uint8_t** pointer, int size, char* target) {
     strncpy(target, (char*)*pointer, size);
-    *pointer += size;
+    (*pointer) += size;
 }

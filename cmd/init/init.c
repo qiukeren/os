@@ -23,7 +23,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <utmp.h>
-#include "log.h"
+#include "xlog.h"
 #include "x.h"
 
 #define __USE_POSIX

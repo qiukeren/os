@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
-#include "log.h"
+#include "xlog.h"
 #include "x.h"
-
-#define LOG_LEVEL TRACE_LEVEL
 
 TEST(x_flag, test_encode_readu32) {
     uint8_t p[] = {0x27, 0x5b, 0xcd, 0x15};

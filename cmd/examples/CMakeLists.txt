@@ -1,3 +1,2 @@
 add_subdirectory(hello_world)
 add_subdirectory(cpp_hello_world)
-add_subdirectory(nanopbtest)

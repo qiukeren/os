@@ -1,6 +1,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
-#include "log.h"
+#include "xlog.h"
 #include "xpm.h"
 
 #define LOG_LEVEL DEBUG_LEVEL

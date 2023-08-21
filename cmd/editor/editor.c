@@ -53,7 +53,7 @@
 #include <termios.h>
 #include <time.h>
 #include <unistd.h>
-#include "log.h"
+#include "xlog.h"
 
 /* Syntax highlight types */
 #define HL_NORMAL 0

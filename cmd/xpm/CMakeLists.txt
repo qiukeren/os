@@ -13,4 +13,4 @@ add_compile_definitions(_GNU_SOURCE)
 
 add_executable(xpm ${SOURCES})
 
-target_link_libraries(xpm PUBLIC x)
+target_link_libraries(xpm PUBLIC x xlog_static)

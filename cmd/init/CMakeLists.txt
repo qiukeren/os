@@ -15,11 +15,10 @@ add_compile_definitions(_GNU_SOURCE)
 
 add_executable(init init.c init_func.c)
 
-target_link_libraries(init PUBLIC x_static)
-
+target_link_libraries(init PUBLIC x_static xlog_static)
 
 file(GLOB SOURCESCPP "test_*.cpp")
 
-# add_executable(test_init ${SOURCESCPP})
-# target_link_libraries(test_init gtest gtest_main x_static)
-# gtest_discover_tests(test_init)
+add_executable(test_init ${SOURCESCPP})
+target_link_libraries(test_init gtest gtest_main x_static xlog_static)
+gtest_discover_tests(test_init)

@@ -7,6 +7,7 @@ extern "C" {
 
 #define X_VERSION "XOS-prebuild-0.0.0"
 
+#include "xlog.h"
 #include "x_command.h"
 #include "x_debug.h"
 #include "x_file.h"
