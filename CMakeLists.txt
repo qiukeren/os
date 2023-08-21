@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-set(CMAKE_SYSTEM_NAME Linux)
+project(xos)
 
 include(crosstools.cmake)
 
@@ -35,7 +35,6 @@ include(GoogleTest)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
-project(xos)
 
 include_directories(
     xos
@@ -49,8 +48,6 @@ include_directories(
     libs/httplib
     libs/zlib
     libs/linenoise
-    libs/httplib
-    libs/nanopb/
 )
 
 
@@ -62,9 +59,8 @@ add_subdirectory(libs/sqlite)
 add_subdirectory(libs/zlib)
 add_subdirectory(libs/ini)
 add_subdirectory(libs/x)
-add_subdirectory(libs/pbfile)
+add_subdirectory(libs/version)
 
-add_subdirectory(libs/nanopb)
 # add_subdirectory(libs/xconf) add_subdirectory(libs/xdb)
 
 add_subdirectory(cmd/examples)
@@ -72,7 +68,6 @@ add_subdirectory(cmd/examples)
 add_subdirectory(cmd/editor)
 add_subdirectory(cmd/validation)
 # add_subdirectory(cmd/xpm_pack_validation)
-# add_subdirectory(cmd/examples/nanopbtest)
 add_subdirectory(cmd/xpm)
 add_subdirectory(cmd/xhttpd)
 add_subdirectory(cmd/shell)

@@ -4,13 +4,15 @@
 #include <stdint.h>
 #include <string.h>
 
-uint32_t x_read_uint32(uint8_t* pointer);
-uint64_t x_read_uint64(uint8_t* pointer);
+typedef struct {
+    uint32_t size;
+    uint8_t* data;
+} X_ENCODE_STRING;
 
-uint32_t x_read_and_move_uint32(uint8_t** pointer);
-uint64_t x_read_and_move_uint64(uint8_t** pointer);
+X_ENCODE_STRING* x_write_uint32_to_chars(uint32_t t);
+X_ENCODE_STRING* x_write_uint64_to_chars(uint64_t t);
 
-void x_read_chars(uint8_t* pointer, int size, char* target);
-void x_read_move_chars(uint8_t** pointer, int size, char* target);
+X_ENCODE_STRING* x_new_encode_bytes(uint32_t size);
+void x_free_encode_bytes(X_ENCODE_STRING*);
 
 #endif

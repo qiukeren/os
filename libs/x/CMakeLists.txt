@@ -10,7 +10,8 @@ add_library(x SHARED ${SOURCES})
 
 add_library(x_static STATIC ${SOURCES})
 
-#target_link_libraries(x PUBLIC sqlite)
+# target_link_libraries(x PUBLIC sqlite)
+target_link_libraries(x PUBLIC xlog)
 
 # add_executable(test_cflag test_cflag.c)
 # target_link_libraries(test_cflag x log_static)
